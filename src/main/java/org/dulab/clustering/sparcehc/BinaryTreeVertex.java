@@ -1,9 +1,10 @@
 package org.dulab.clustering.sparcehc;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public abstract class BinaryTreeVertex {
+public class BinaryTreeVertex {
 
     int id;
     BinaryTreeVertex ancestor;
@@ -11,7 +12,7 @@ public abstract class BinaryTreeVertex {
     BinaryTreeVertex right;
     boolean isActive;
 
-    Map<BinaryTreeVertex, Integer> outEdges;
+    Map<BinaryTreeVertex, Integer> edgeCounts;
     int numChildren;
 
     public BinaryTreeVertex(int id) {
@@ -20,6 +21,9 @@ public abstract class BinaryTreeVertex {
         left = null;
         right = null;
         isActive = true;
+
+        numChildren = 1;
+        edgeCounts = new HashMap<>();
     }
 
     public void updateAncestor(BinaryTreeVertex ancestor) {
@@ -30,16 +34,18 @@ public abstract class BinaryTreeVertex {
             right.updateAncestor(ancestor);
     }
 
-    public abstract boolean isConnected(BinaryTreeVertex v);
+    public boolean isConnected(BinaryTreeVertex v) {
+        return edgeCounts.containsKey(v);
+    }
 
-    public abstract int getNumEdges();
-
-    public abstract void printOutEdges();
+    public int getNumEdges() {
+        return edgeCounts.size();
+    }
 
     @Override
     public String toString() {
-        return String.format("BinaryTreeVertex %d has %d edges: ", id, outEdges.size())
-                + outEdges.entrySet()
+        return String.format("BinaryTreeVertex %d has %d edges: ", id, edgeCounts.size())
+                + edgeCounts.entrySet()
                 .stream()
                 .map(e -> String.format("(%d, %d)", e.getKey().id, e.getValue()))
                 .collect(Collectors.joining(", "));

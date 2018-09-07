@@ -1,6 +1,5 @@
 package org.dulab.clustering.sparcehc;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +15,7 @@ public abstract class SparseHierarchicalClusterer {
     public SparseHierarchicalClusterer(Matrix m) {
         matrix = m;
         vertices = IntStream.range(0, m.getNumElements())
-                .mapToObj(this::createVertex)
+                .mapToObj(BinaryTreeVertex::new)
                 .collect(Collectors.toList());
         dendogram = new Dendogram(m.getNumElements());
     }
@@ -33,8 +32,6 @@ public abstract class SparseHierarchicalClusterer {
         }
         return labels;
     }
-
-    public abstract BinaryTreeVertex createVertex(int id);
 
     public abstract Dendogram cluster();
 
