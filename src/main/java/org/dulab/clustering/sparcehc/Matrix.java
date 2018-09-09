@@ -21,7 +21,8 @@ public class Matrix {
     }
 
     void add(int row, int col, float value) {
-        elements.add(new MatrixElement(row, col, value));
+        if (value < threshold)
+            elements.add(new MatrixElement(row, col, value));
     }
 
     SortedSet<MatrixElement> getElements() {

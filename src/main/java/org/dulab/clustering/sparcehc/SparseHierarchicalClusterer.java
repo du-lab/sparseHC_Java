@@ -33,7 +33,7 @@ public abstract class SparseHierarchicalClusterer {
         return labels;
     }
 
-    public abstract Dendogram cluster();
+    public abstract Dendogram cluster(float threshold);
 
     public void updateGraph(int id1, int id2, float distance) {
         dendogram.add(id1, id2, distance);
