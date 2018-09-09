@@ -26,7 +26,10 @@ public abstract class SparseHierarchicalClusterer {
 
     public Map<Integer, Integer> getLabels() {
         Map<Integer, Integer> labels = new HashMap<>();
-        for (MatrixElement element : matrix.getElements()) {
+
+        matrix.init();
+        MatrixElement element;
+        while ((element = matrix.getNext()) != null) {
             labels.put(element.row, vertices.get(element.row).ancestor.id);
             labels.put(element.col, vertices.get(element.col).ancestor.id);
         }

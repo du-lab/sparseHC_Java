@@ -16,7 +16,7 @@ public class CompleteSparseHierarchicalClustererTest {
         int[] rows = new int[]{1, 1, 3, 0, 3, 4};
         int[] cols = new int[]{2, 3, 5, 1, 4, 5};
 
-        Matrix matrix = new Matrix();
+        MatrixImpl matrix = new MatrixImpl();
 
         for (int i = 0; i < values.length; ++i)
             matrix.add(rows[i], cols[i], values[i]);
@@ -39,7 +39,7 @@ public class CompleteSparseHierarchicalClustererTest {
 
         final int numPoints = 1000;
 
-        Matrix matrix = new Matrix(1F);
+        MatrixImpl matrix = new MatrixImpl(1F);
         for (int i = 0; i < numPoints; ++i)
             for (int j = i + 1; j < numPoints; ++j)
                 matrix.add(i, j, 10F * (j - i) / numPoints);

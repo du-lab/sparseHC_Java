@@ -4,48 +4,14 @@ import java.util.Objects;
 
 public class MatrixElement {
 
-    int row;
-    int col;
-    float value;
+    final int row;
+    final int col;
+    final float value;
 
     MatrixElement(int row, int col, float value) {
-        update(row, col, value);
-    }
-
-    void update(int row, int col, float value) {
         this.row = row;
         this.col = col;
         this.value = value;
-    }
-
-    boolean isAboveThreshold(float threshold) {
-        return value > threshold;
-    }
-
-    boolean lessThan(final MatrixElement e) {
-        if (value == e.value)
-            if (row == e.row)
-                return col < e.col;
-            else
-                return row < e.row;
-        else
-            return value < e.value;
-    }
-
-    boolean equalTo(final MatrixElement e) {
-        return value == e.value;
-    }
-
-    static MatrixElement minValue() {
-        return new MatrixElement(0, 0, Float.MIN_VALUE);
-    }
-
-    static MatrixElement maxValue() {
-        return new MatrixElement(Integer.MAX_VALUE, Integer.MAX_VALUE, Float.MAX_VALUE);
-    }
-
-    static int size() {
-        return 32 * 2 + 32;
     }
 
     @Override
