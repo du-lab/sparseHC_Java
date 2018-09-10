@@ -1,4 +1,4 @@
-package org.dulab.clustering.sparcehc;
+package org.dulab.jsparcehc;
 
 import java.util.HashMap;
 import java.util.List;

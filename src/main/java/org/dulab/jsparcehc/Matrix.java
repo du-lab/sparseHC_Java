@@ -1,4 +1,4 @@
-package org.dulab.clustering.sparcehc;
+package org.dulab.jsparcehc;
 
 /**
  * This interface is used to acquire values of the distance matrix. The values should be sorted in the ascending order.

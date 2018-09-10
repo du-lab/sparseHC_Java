@@ -1,4 +1,4 @@
-package org.dulab.clustering.sparcehc;
+package org.dulab.jsparcehc;
 
 import java.util.ArrayList;
 import java.util.List;
