@@ -4,19 +4,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.dulab.jsparsehc</groupId>
+    <groupId>org.du-lab.jsparsehc</groupId>
     <artifactId>jsparsehc</artifactId>
     <version>0.0.1</version>
+    <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Java implementation of SparseHC: a memory-efficient online hierarchical clustering algorithm.</description>
-    <url></url>
+    <url>https://github.com/du-lab/sparseHC_Java</url>
 
     <licenses>
         <license>
-            <name></name>
+            <name>GNU General Public License v3.0</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
         </license>
     </licenses>
+
+    <developers>
+        <developer>
+            <name>Aleksandr Smirnov</name>
+            <email>asmirno1@uncc.edu</email>
+            <organization>Department of Bioinformatics and Genomics, University of North Carolina at Charlotte</organization>
+            <organizationUrl>http://www.du-lab.org/</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/du-lab/sparseHC_Java.git</connection>
+        <developerConnection>scm:git:ssh://github.com/du-lab/sparseHC_Java.git</developerConnection>
+        <url>https://github.com/du-lab/sparseHC_Java/tree/master</url>
+    </scm>
 
     <dependencies>
         <dependency>
