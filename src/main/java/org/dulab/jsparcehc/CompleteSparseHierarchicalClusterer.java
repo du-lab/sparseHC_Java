@@ -7,14 +7,14 @@ public class CompleteSparseHierarchicalClusterer extends SparseHierarchicalClust
 
     private int totalNumEdges;
 
-    CompleteSparseHierarchicalClusterer(Matrix m) {
+    public CompleteSparseHierarchicalClusterer(Matrix m) {
         super(m);
         totalNumEdges = 0;
     }
 
     public Dendogram cluster(float threshold) {
 
-        int newId = matrix.getNumElements();
+        int newId = matrix.getDimension();
 
         matrix.init();
         MatrixElement element;
@@ -23,7 +23,7 @@ public class CompleteSparseHierarchicalClusterer extends SparseHierarchicalClust
             BinaryTreeVertex v1 = vertices.get(element.row).ancestor;
             BinaryTreeVertex v2 = vertices.get(element.col).ancestor;
 
-            if (v1 == v2) break;
+            if (v1 == v2) continue;
 
             if (v1.id < v2.id) {
                 BinaryTreeVertex v = v1;

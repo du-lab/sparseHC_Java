@@ -7,6 +7,9 @@ public class MatrixImpl implements Matrix {
     private SortedSet<MatrixElement> elements;
     private Iterator<MatrixElement> iterator;
 
+    private int maxRow = 0;
+    private int maxCol = 0;
+
     float threshold;
 
     MatrixImpl(float threshold) {
@@ -22,8 +25,11 @@ public class MatrixImpl implements Matrix {
     }
 
     void add(int row, int col, float value) {
-        if (value < threshold)
+        if (value < threshold) {
             elements.add(new MatrixElement(row, col, value));
+            if (row > maxRow) maxRow = row;
+            if (col > maxCol) maxCol = col;
+        }
     }
 
     @Override
@@ -34,6 +40,11 @@ public class MatrixImpl implements Matrix {
     @Override
     public MatrixElement getNext() {
         return iterator.hasNext() ? iterator.next() : null;
+    }
+
+    @Override
+    public int getDimension() {
+        return Math.max(maxRow, maxCol) + 1;
     }
 
     @Override

@@ -13,11 +13,15 @@ public abstract class SparseHierarchicalClusterer {
     final Dendogram dendogram;
 
     public SparseHierarchicalClusterer(Matrix m) {
+
+        if (m.getNumElements() == 0)
+            throw new IllegalStateException("Matrix is empty");
+
         matrix = m;
-        vertices = IntStream.range(0, m.getNumElements())
+        vertices = IntStream.range(0, m.getDimension())
                 .mapToObj(BinaryTreeVertex::new)
                 .collect(Collectors.toList());
-        dendogram = new Dendogram(m.getNumElements());
+        dendogram = new Dendogram(m.getDimension());
     }
 
     public BinaryTreeVertex getVertex(int id) {

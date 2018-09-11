@@ -17,6 +17,12 @@ public interface Matrix {
     MatrixElement getNext();
 
     /**
+     * Returns the number of rows (columns) of the matrix
+     * @return number of rows(columns)
+     */
+    int getDimension();
+
+    /**
      * Returns the number of elements in a sparse distance matrix
      * @return number of elements
      */

@@ -8,7 +8,7 @@ public class MatrixElement {
     final int col;
     final float value;
 
-    MatrixElement(int row, int col, float value) {
+    public MatrixElement(int row, int col, float value) {
         this.row = row;
         this.col = col;
         this.value = value;
