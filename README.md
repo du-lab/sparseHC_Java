@@ -4,7 +4,7 @@
 According to the paper, the empirical runtime complexity for complete-linkage is O(n^2) and the empirical memory complexity is O(n). Thus, this algorithm can be suitable for hierachical clustering of a large number of objects. 
 
 ### References
-This implementation is based on the paper by [T.D. Nguyen, B. Schmidt, and C.K. Whoh _"SparseHC: a memory-efficient online
+This implementation is based on the paper by [T.D. Nguyen, B. Schmidt, and C.K. Kwoh _"SparseHC: a memory-efficient online
 hierarchical clustering algorithm"_](https://www.sciencedirect.com/science/article/pii/S1877050914001781) and on its C++
 implementation [here](https://github.com/mdimura/sparsehc-dm).
 
