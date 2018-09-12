@@ -20,3 +20,14 @@ You can use this package in your Maven project by adding the following lines to 
     <version>0.0.3</version>
 </dependency>
 ```
+
+### Example
+To use the algorithm, you should create an implementation of the interface `Matrix` that provides distance values in the 
+ascending order. Then, you can perform clustering as follows:
+```java
+CompleteSparseHierarchicalClusterer clusterer = new CompleteSparseHierarchicalClusterer(matrix);
+clusterer.cluster(scoreTolerance);
+Map<Integer, Integer> labelMap = clusterer.getLabels();
+```
+The map `labelMap` is a collection of pairs _(index, label)_, where _index_ is a row (column) index of an object in the
+distance matrix, _label_ is a label of the cluster containing that object.  
