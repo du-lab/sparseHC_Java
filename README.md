@@ -1,6 +1,8 @@
 # Java implementation of SparseHC (Complete-linkage only)
 ## A memory-efficient online hierarchical clustering algorithm
 
+According to the paper, the empirical runtime complexity for complete-linkage is $O(n^2)$ and the empitical memory complexity is $O(n)$. Thus, this algorithm can be suitable for hierachical clustering of a large number of objects. 
+
 ### References
 This implementation is based on the paper by [T.D. Nguyen, B. Schmidt, and C.K. Whoh _"SparseHC: a memory-efficient online
 hierarchical clustering algorithm"_](https://www.sciencedirect.com/science/article/pii/S1877050914001781) and on its C++
