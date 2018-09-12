@@ -25,6 +25,8 @@ You can use this package in your Maven project by adding the following lines to 
 To use the algorithm, you should create an implementation of the interface `Matrix` that provides distance values in the 
 ascending order. Then, you can perform clustering as follows:
 ```java
+Matrix matrix = ...;
+
 CompleteSparseHierarchicalClusterer clusterer = new CompleteSparseHierarchicalClusterer(matrix);
 clusterer.cluster(scoreTolerance);
 Map<Integer, Integer> labelMap = clusterer.getLabels();
