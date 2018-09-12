@@ -8,3 +8,13 @@ implementation by [mdimura](https://github.com/mdimura/sparsehc-dm).
 
 ### Remark
 So far, only the __complete-linkage__ hierarchical clustering is implemented. Feel free to implement the rest.
+
+### Install
+You can use this package in your Maven project by adding the following lines to your __pom.xml__ file:
+```xml
+<dependency>
+    <groupId>org.du-lab.jsparsehc</groupId>
+    <artifactId>jsparsehc</artifactId>
+    <version>0.0.3</version>
+</dependency>
+```
