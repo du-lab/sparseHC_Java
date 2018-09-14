@@ -21,7 +21,8 @@ public class CompleteSparseHierarchicalClustererTest {
         for (int i = 0; i < values.length; ++i)
             matrix.add(rows[i], cols[i], values[i]);
 
-        CompleteSparseHierarchicalClusterer clusterer = new CompleteSparseHierarchicalClusterer(matrix);
+
+        SparseHierarchicalClusterer clusterer = new SparseHierarchicalClusterer(matrix, new CompleteLinkage());
         clusterer.cluster(2f);
 
         Map<Integer, Integer> labels = clusterer.getLabels();
@@ -44,7 +45,7 @@ public class CompleteSparseHierarchicalClustererTest {
             for (int j = i + 1; j < numPoints; ++j)
                 matrix.add(i, j, 10F * (j - i) / numPoints);
 
-        CompleteSparseHierarchicalClusterer clusterer = new CompleteSparseHierarchicalClusterer(matrix);
+        SparseHierarchicalClusterer clusterer = new SparseHierarchicalClusterer(matrix, new CompleteLinkage());
         clusterer.cluster(1F);
 
         Map<Integer, Integer> labels = clusterer.getLabels();

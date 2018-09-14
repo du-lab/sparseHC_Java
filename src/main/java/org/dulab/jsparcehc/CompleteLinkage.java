@@ -1,63 +1,28 @@
 package org.dulab.jsparcehc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class CompleteSparseHierarchicalClusterer extends SparseHierarchicalClusterer {
+public class CompleteLinkage implements Linkage {
 
-    private int totalNumEdges;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean check(BinaryTreeVertex v1, BinaryTreeVertex v2) {
 
-    public CompleteSparseHierarchicalClusterer(Matrix m) {
-        super(m);
-        totalNumEdges = 0;
+        int numEdges = 1 + v1.edgeCounts.getOrDefault(v2, 0);
+        v1.edgeCounts.put(v2, numEdges);
+
+        return numEdges == v1.numChildren * v2.numChildren;
     }
 
-    public Dendogram cluster(float threshold) {
-
-        int newId = matrix.getDimension();
-
-        matrix.init();
-        MatrixElement element;
-        while ((element = matrix.getNext()) != null && element.value < threshold) {
-
-            BinaryTreeVertex v1 = vertices.get(element.row).ancestor;
-            BinaryTreeVertex v2 = vertices.get(element.col).ancestor;
-
-            if (v1 == v2) continue;
-
-            if (v1.id < v2.id) {
-                BinaryTreeVertex v = v1;
-                v1 = v2;
-                v2 = v;
-            }
-
-            // v1 is always larger then v2
-            // Links are stored in v1
-
-            int numEdges = 1 + v1.edgeCounts.getOrDefault(v2, 0);
-            v1.edgeCounts.put(v2, numEdges);
-
-            totalNumEdges += (numEdges == 1) ? 1 : 0;
-
-            if (numEdges == v1.numChildren * v2.numChildren) {
-
-                BinaryTreeVertex v = new BinaryTreeVertex(newId);
-                vertices.add(v);
-                merge(v1, v2, v);
-                ++newId;
-
-                // For visualization purpose
-                updateGraph(v1.id, v2.id, element.value);
-            }
-
-//            if (totalNumEdges > maxEdges)
-//                maxEdges *= 1.1F;
-        }
-
-        return dendogram;
-    }
-
-    void merge(BinaryTreeVertex v1, BinaryTreeVertex v2, BinaryTreeVertex v) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void merge(BinaryTreeVertex v1, BinaryTreeVertex v2, BinaryTreeVertex v, List<BinaryTreeVertex> vertices) {
 
         // Set child vertices for the parent TreeNode
         v.left = v1;
@@ -109,14 +74,5 @@ public class CompleteSparseHierarchicalClusterer extends SparseHierarchicalClust
                 vertex.edgeCounts.remove(v2);
             }
         }
-
-        totalNumEdges = getNumEdges();
-    }
-
-    private int getNumEdges() {
-        return vertices.stream()
-                .filter(v -> v.isActive)
-                .mapToInt(v -> v.edgeCounts.size())
-                .sum();
     }
 }
