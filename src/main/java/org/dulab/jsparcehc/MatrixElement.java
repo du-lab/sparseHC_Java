@@ -14,6 +14,10 @@ public class MatrixElement {
         this.value = value;
     }
 
+    public float getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return String.format("(%d, %d, %f)", row, col, value);
