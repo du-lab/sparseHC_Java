@@ -12,7 +12,7 @@ public class MatrixImpl implements Matrix {
 
     float threshold;
 
-    MatrixImpl(float threshold) {
+    public MatrixImpl(float threshold) {
         this.threshold = threshold;
         this.elements = new TreeSet<>(Comparator
                 .comparing((MatrixElement e) -> e.value)
@@ -20,11 +20,11 @@ public class MatrixImpl implements Matrix {
                 .thenComparing((MatrixElement e) -> e.col));
     }
 
-    MatrixImpl() {
+    public MatrixImpl() {
         this(Float.MAX_VALUE);
     }
 
-    void add(int row, int col, float value) {
+    public void add(int row, int col, float value) {
         if (value < threshold) {
             elements.add(new MatrixElement(row, col, value));
             if (row > maxRow) maxRow = row;
