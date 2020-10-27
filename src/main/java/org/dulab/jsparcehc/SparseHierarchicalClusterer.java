@@ -37,13 +37,15 @@ public class SparseHierarchicalClusterer {
 
     public Map<Integer, Integer> getLabels() {
         Map<Integer, Integer> labels = new HashMap<>();
-
-        matrix.init();
-        MatrixElement element;
-        while ((element = matrix.getNext()) != null) {
-            labels.put(element.row, vertices.get(element.row).ancestor.id);
-            labels.put(element.col, vertices.get(element.col).ancestor.id);
+        for (int i = 0; i < matrix.getDimension(); ++i) {
+            labels.put(i, vertices.get(i).ancestor.id);
         }
+//        matrix.init();
+//        MatrixElement element;
+//        while ((element = matrix.getNext()) != null) {
+//            labels.put(element.row, vertices.get(element.row).ancestor.id);
+//            labels.put(element.col, vertices.get(element.col).ancestor.id);
+//        }
         return labels;
     }
 
@@ -82,6 +84,14 @@ public class SparseHierarchicalClusterer {
 
     public void updateGraph(int id1, int id2, float distance) {
         dendogram.add(id1, id2, distance);
+    }
+
+    public BinaryTreeVertex getVertexById(int id) {
+        for (BinaryTreeVertex vertex : vertices) {
+            if (vertex.id == id)
+                return vertex;
+        }
+        return null;
     }
 
     protected int getNewVertexId() {

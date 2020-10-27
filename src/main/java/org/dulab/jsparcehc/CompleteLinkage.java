@@ -75,4 +75,14 @@ public class CompleteLinkage implements Linkage {
             }
         }
     }
+
+    @Override
+    public float computeDij(BinaryTreeEdge edge, float dxy) {
+        return checkComplete(edge) ? dxy : Float.MAX_VALUE;
+    }
+
+    @Override
+    public boolean checkComplete(BinaryTreeEdge edge) {
+        return edge.getNumberOfDistances() == edge.getVertexI().numChildren * edge.getVertexJ().numChildren;
+    }
 }

@@ -80,7 +80,7 @@ public class Launcher {
      */
     private static void cluster(float threshold, File inputFile, File outputFile) {
         Matrix distanceMatrix = readFile(inputFile);
-        SparseHierarchicalClusterer clusterer = new SparseHierarchicalClusterer(distanceMatrix, new CompleteLinkage());
+        SparseHierarchicalClustererV2 clusterer = new SparseHierarchicalClustererV2(distanceMatrix, new CompleteLinkage());
         clusterer.cluster(threshold);
         Map<Integer, Integer> labels = clusterer.getLabels();
         saveLabels(outputFile, labels);

@@ -13,7 +13,12 @@ public class BinaryTreeVertex {
     boolean isActive;
 
     Map<BinaryTreeVertex, Integer> edgeCounts;
+    Map<BinaryTreeVertex, BinaryTreeEdge> edges;
     int numChildren;
+
+    float minK = Float.MAX_VALUE;
+    float minI = Float.MAX_VALUE;
+    BinaryTreeVertex mergeCandidate;
 
     public BinaryTreeVertex(int id) {
         this.id = id;
@@ -24,6 +29,7 @@ public class BinaryTreeVertex {
 
         numChildren = 1;
         edgeCounts = new HashMap<>();
+        edges = new HashMap<>();
     }
 
     public void updateAncestor(BinaryTreeVertex ancestor) {
@@ -40,6 +46,26 @@ public class BinaryTreeVertex {
 
     public int getNumEdges() {
         return edgeCounts.size();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public BinaryTreeVertex getLeft() {
+        return left;
+    }
+
+    public BinaryTreeVertex getRight() {
+        return right;
+    }
+
+    public void setAncestor(BinaryTreeVertex ancestor) {
+        this.ancestor = ancestor;
+        if (left != null)
+            left.setAncestor(ancestor);
+        if (right != null)
+            right.setAncestor(ancestor);
     }
 
     @Override

@@ -24,4 +24,14 @@ public class SingleLinkage implements Linkage {
         v1.updateAncestor(v);
         v2.updateAncestor(v);
     }
+
+    @Override
+    public float computeDij(BinaryTreeEdge edge, float dxy) {
+        return checkComplete(edge) ? dxy : Float.MAX_VALUE;
+    }
+
+    @Override
+    public boolean checkComplete(BinaryTreeEdge edge) {
+        return edge.getNumberOfDistances() == 1;
+    }
 }

@@ -20,4 +20,8 @@ public interface Linkage {
      * @param vertices list of all vertices
      */
     void merge(BinaryTreeVertex v1, BinaryTreeVertex v2, BinaryTreeVertex v, List<BinaryTreeVertex> vertices);
+
+    float computeDij(BinaryTreeEdge edge, float dxy);
+
+    boolean checkComplete(BinaryTreeEdge edge);
 }

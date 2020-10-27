@@ -1,10 +1,16 @@
 package org.dulab.jsparcehc;
 
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
 
@@ -75,5 +81,50 @@ public class CompleteSparseHierarchicalClustererTest {
         // Expect one cluster of size 40 and fifteen clusters of size 64
         assertEquals(1, numClustersBySize.get(40L).intValue());
         assertEquals(15, numClustersBySize.get(64L).intValue());
+    }
+
+    @Test
+    public void test3() throws IOException, CsvValidationException {
+
+        // Read data
+        List<double[]> data = new ArrayList<>();
+        InputStream stream = this.getClass().getResourceAsStream("iris-data.csv");
+        try(CSVReader reader = new CSVReader(new InputStreamReader(stream))) {
+            String[] header = reader.readNext();
+            String[] values;
+            int count = 0;
+            while ((values = reader.readNext()) != null && count < 10) {
+                double[] xs = Arrays.stream(values).mapToDouble(Double::parseDouble).toArray();
+                System.out.printf("%f %f %f %f\n", xs[0], xs[1], xs[2], xs[3]);
+                data.add(xs);
+                ++count;
+            }
+        }
+
+        // Calculate distances
+        MatrixImpl matrix = new MatrixImpl();
+        for (int i = 0; i < data.size(); ++i) {
+            double[] vector1 = data.get(i);
+            for (int j = i + 1; j < data.size(); ++j) {
+                double[] vector2 = data.get(j);
+                double distance =  Math.sqrt(IntStream.range(0, 4)
+                        .mapToDouble(k -> vector1[k] - vector2[k])
+                        .map(x -> x * x)
+                        .sum());
+                matrix.add(i, j, new Double(distance).floatValue());
+            }
+        }
+
+        // Cluster
+        SparseHierarchicalClusterer clusterer = new SparseHierarchicalClusterer(matrix, new CompleteLinkage());
+        clusterer.cluster(Float.MAX_VALUE);
+
+        Map<Integer, Integer> labels = clusterer.getLabels();
+        for (Map.Entry<Integer, Integer> e : labels.entrySet())
+            assertEquals(18, e.getValue().intValue());
+
+        BinaryTreeVertex vertex = clusterer.getVertex(18);
+        System.out.println(vertex);
+
     }
 }
