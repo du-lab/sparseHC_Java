@@ -1,7 +1,18 @@
 # Java implementation of SparseHC
 ## A memory-efficient online hierarchical clustering algorithm
 
-According to the paper, the empirical runtime complexity for complete-linkage is O(n^2) and the empirical memory complexity is O(n). Thus, this algorithm can be suitable for hierachical clustering of a large number of objects and the memory is scarce. 
+Currently, this packages contains two implementations of a sparse hierarchical clustering
+- `SparseHierarchicalClusterer` is based on the source code found [here](https://github.com/qedsoftware/sparsehc) 
+and [here](https://github.com/mdimura/sparsehc-dm)
+- `SparseHierarchicalClustererV2` is based on the paper by 
+[T.D. Nguyen, B. Schmidt, and C.K. Kwoh _"SparseHC: a memory-efficient online hierarchical clustering algorithm"_](https://www.sciencedirect.com/science/article/pii/S1877050914001781).
+
+I highly recommend using `SparseHierarchicalClustererV2` because it has been better tested,
+while `SparseHierarchicalClusterer` is known to have some issues.  
+
+According to the paper, the empirical runtime complexity for complete-linkage is O(n^2), 
+and the empirical memory complexity is O(n). Thus, this algorithm can be suitable for 
+hierarchical clustering of many objects and when the available memory is scarce. 
 
 ### References
 This implementation is based on the paper by [T.D. Nguyen, B. Schmidt, and C.K. Kwoh _"SparseHC: a memory-efficient online
@@ -17,7 +28,7 @@ You can use this package in your Maven project by adding the following lines to 
 <dependency>
     <groupId>org.du-lab.jsparsehc</groupId>
     <artifactId>jsparsehc</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
@@ -27,7 +38,7 @@ ascending order. Then, you can perform clustering as follows:
 ```java
 Matrix matrix = ...;
 
-SparseHierarchicalClusterer clusterer = new SparseHierarchicalClusterer(matrix, new CompleteLinkage());
+SparseHierarchicalClustererV2 clusterer = new SparseHierarchicalClustererV2(matrix, new CompleteLinkage());
 clusterer.cluster(scoreTolerance);
 Map<Integer, Integer> labelMap = clusterer.getLabels();
 ```
