@@ -24,4 +24,6 @@ public interface Linkage {
     float computeDij(BinaryTreeEdge edge, float dxy);
 
     boolean checkComplete(BinaryTreeEdge edge);
+
+    float calculateDistance(BinaryTreeEdge edge);
 }

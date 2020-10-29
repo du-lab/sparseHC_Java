@@ -4,20 +4,25 @@ import java.util.*;
 
 public class MatrixImpl implements Matrix {
 
-    private SortedSet<MatrixElement> elements;
-    private Iterator<MatrixElement> iterator;
+    private final SortedSet<MatrixElement> elements;
+    private final float threshold;
+    private final Integer dimension;
 
+    private Iterator<MatrixElement> iterator;
     private int maxRow = 0;
     private int maxCol = 0;
 
-    float threshold;
-
-    public MatrixImpl(float threshold) {
+    public MatrixImpl(float threshold, Integer dimension) {
         this.threshold = threshold;
+        this.dimension = dimension;
         this.elements = new TreeSet<>(Comparator
                 .comparing((MatrixElement e) -> e.value)
                 .thenComparing((MatrixElement e) -> e.row)
                 .thenComparing((MatrixElement e) -> e.col));
+    }
+
+    public MatrixImpl(float threshold) {
+        this(threshold, null);
     }
 
     public MatrixImpl() {
@@ -44,7 +49,7 @@ public class MatrixImpl implements Matrix {
 
     @Override
     public int getDimension() {
-        return Math.max(maxRow, maxCol) + 1;
+        return dimension != null ? dimension : Math.max(maxRow, maxCol) + 1;
     }
 
     @Override

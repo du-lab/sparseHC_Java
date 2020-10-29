@@ -67,17 +67,18 @@ public class SparseHierarchicalClustererV2 {
             if (ci == cj) continue;
 
             BinaryTreeEdge eij = ci.edges.get(cj);
+
             if (eij == null) {
                 eij = new BinaryTreeEdge(ci, cj);
                 ci.edges.put(cj, eij);
                 cj.edges.put(ci, eij);
             }
 
-            eij.update(dxy, linkage);
+            eij.update(element);
             updateLists(eij);
 
             while ((eij = findMinimumEdge(completeEdges)) != null
-                    && (eij.getDistance() <= findMinimum(incompleteEdges))) {
+                    && (linkage.calculateDistance(eij) <= findMinimum(incompleteEdges))) {
                 BinaryTreeVertex vertexK = merge(newVertexId++, eij);
                 vertices.add(vertexK);
                 removeFromLists(eij);
@@ -106,17 +107,19 @@ public class SparseHierarchicalClustererV2 {
     private BinaryTreeEdge findMinimumEdge(Set<BinaryTreeEdge> edges) {
         BinaryTreeEdge minimumEdge = null;
         float minimumDistance = Float.MAX_VALUE;
-        for (BinaryTreeEdge edge : edges)
-            if (edge.getDistance() < minimumDistance) {
-                minimumDistance = edge.getDistance();
+        for (BinaryTreeEdge edge : edges) {
+            float distance = linkage.calculateDistance(edge);
+            if (distance < minimumDistance) {
+                minimumDistance = distance;
                 minimumEdge = edge;
             }
+        }
         return minimumEdge;
     }
 
     private float findMinimum(Set<BinaryTreeEdge> edges) {
         BinaryTreeEdge edge = findMinimumEdge(edges);
-        return edge != null ? edge.getDistance() : Float.MAX_VALUE;
+        return edge != null ? linkage.calculateDistance(edge) : Float.MAX_VALUE;
     }
 
     private BinaryTreeVertex merge(int id, BinaryTreeEdge eij) {
@@ -149,12 +152,15 @@ public class SparseHierarchicalClustererV2 {
 
             if (eim != null && ejm != null) {
                 BinaryTreeEdge ekm = new BinaryTreeEdge(vertexM, vertexK);
-                ekm.update(eim.getNumberOfDistances() + ejm.getNumberOfDistances(),
-                        eim.getSumOfDistances() + ejm.getSumOfDistances(), linkage);
+                Set<MatrixElement> elements = new HashSet<>(eim.getMatrixElements());
+                elements.addAll(ejm.getMatrixElements());
+                ekm.update(elements);
                 vertexK.edges.put(vertexM, ekm);
                 vertexM.edges.put(vertexK, ekm);
                 vertexM.edges.remove(eij.getVertexI());
                 vertexM.edges.remove(eij.getVertexJ());
+                edgesI.remove(vertexM);
+                edgesJ.remove(vertexM);
 
                 updateLists(ekm);
                 removeFromLists(eim, ejm);
@@ -162,15 +168,17 @@ public class SparseHierarchicalClustererV2 {
             } else if (eim != null) {
                 vertexK.edges.put(vertexM, eim);
                 vertexM.edges.put(vertexK, eim);
-                vertexM.edges.remove(eim.getVertexI());
-                eim.setVertexI(vertexK);
+                vertexM.edges.remove(eij.getVertexI());
+                edgesI.remove(vertexM);
+                eim.replaceVertex(eij.getVertexI(), vertexK);
                 updateLists(eim);
 
             } else if (ejm != null) {
                 vertexK.edges.put(vertexM, ejm);
                 vertexM.edges.put(vertexK, ejm);
-                vertexM.edges.remove(ejm.getVertexJ());
-                ejm.setVertexJ(vertexK);
+                vertexM.edges.remove(eij.getVertexJ());
+                edgesJ.remove(vertexM);
+                ejm.replaceVertex(eij.getVertexJ(), vertexK);
                 updateLists(ejm);
             }
         }

@@ -16,10 +16,6 @@ public class BinaryTreeVertex {
     Map<BinaryTreeVertex, BinaryTreeEdge> edges;
     int numChildren;
 
-    float minK = Float.MAX_VALUE;
-    float minI = Float.MAX_VALUE;
-    BinaryTreeVertex mergeCandidate;
-
     public BinaryTreeVertex(int id) {
         this.id = id;
         ancestor = this;
@@ -66,6 +62,19 @@ public class BinaryTreeVertex {
             left.setAncestor(ancestor);
         if (right != null)
             right.setAncestor(ancestor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!(obj instanceof BinaryTreeVertex)) return false;
+        BinaryTreeVertex that = (BinaryTreeVertex) obj;
+        return this.id == that.id;
     }
 
     @Override

@@ -83,6 +83,21 @@ public class CompleteLinkage implements Linkage {
 
     @Override
     public boolean checkComplete(BinaryTreeEdge edge) {
-        return edge.getNumberOfDistances() == edge.getVertexI().numChildren * edge.getVertexJ().numChildren;
+        return edge.getMatrixElements().size() == edge.getVertexI().numChildren * edge.getVertexJ().numChildren;
+    }
+
+    @Override
+    public float calculateDistance(BinaryTreeEdge edge) {
+
+        if (edge.getMatrixElements().isEmpty())
+            throw new IllegalStateException("Cannot calculate distance of an empty edge");
+
+        if (!checkComplete(edge)) return Float.MAX_VALUE;
+
+        float maxDistance = 0F;
+        for (MatrixElement e : edge.getMatrixElements())
+            if (e.value > maxDistance)
+                maxDistance = e.value;
+        return maxDistance;
     }
 }

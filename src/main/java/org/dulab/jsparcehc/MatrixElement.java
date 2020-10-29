@@ -9,6 +9,12 @@ public class MatrixElement {
     final float value;
 
     public MatrixElement(int row, int col, float value) {
+        if (col < row) {
+            int i = row;
+            row = col;
+            col = i;
+        }
+
         this.row = row;
         this.col = col;
         this.value = value;
@@ -28,11 +34,11 @@ public class MatrixElement {
         if (this == other) return true;
         if (!(other instanceof MatrixElement)) return false;
         MatrixElement that = (MatrixElement) other;
-        return this.row == that.row && this.col == that.col && this.value == that.value;
+        return this.row == that.row && this.col == that.col;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, col, value);
+        return Objects.hash(row, col);
     }
 }

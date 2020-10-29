@@ -1,36 +1,27 @@
 package org.dulab.jsparcehc;
 
+import java.util.*;
+
 public class BinaryTreeEdge {
 
     private BinaryTreeVertex vertexI;
     private BinaryTreeVertex vertexJ;
-    private int numberOfDistances;
-    private float sumOfDistances;
-//    private boolean complete;
-    private float distance;
+    private final Set<MatrixElement> matrixElements;
+
 
     public BinaryTreeEdge(BinaryTreeVertex vertexI, BinaryTreeVertex vertexJ) {
         this.vertexI = vertexI;
         this.vertexJ = vertexJ;
-        this.numberOfDistances = 0;
-        this.sumOfDistances = 0F;
-//        this.complete = false;
+        this.matrixElements = new HashSet<>();
     }
 
-    public void update(int n, float distance, Linkage linkage) {
-        numberOfDistances += n;
-        sumOfDistances += distance;
-        distance = linkage.computeDij(this, distance);
-//        complete = numberOfDistances == vertexI.numChildren * vertexJ.numChildren;
+    public void update(Collection<MatrixElement> elements) {
+        matrixElements.addAll(elements);
     }
 
-    public void update(float distance, Linkage linkage) {
-        update(1, distance, linkage);
+    public void update(MatrixElement element) {
+        update(Collections.singleton(element));
     }
-
-//    public boolean isComplete() {
-//        return complete;
-//    }
 
     public void setVertexI(BinaryTreeVertex vertexI) {
         this.vertexI = vertexI;
@@ -48,15 +39,16 @@ public class BinaryTreeEdge {
         return vertexJ;
     }
 
-    public float getDistance() {
-        return distance;
+    public Set<MatrixElement> getMatrixElements() {
+        return matrixElements;
     }
 
-    public int getNumberOfDistances() {
-        return numberOfDistances;
-    }
-
-    public float getSumOfDistances() {
-        return sumOfDistances;
+    public void replaceVertex(BinaryTreeVertex from, BinaryTreeVertex to) {
+        if (vertexI.equals(from))
+            vertexI = to;
+        else if (vertexJ.equals(from))
+            vertexJ = to;
+        else
+            throw new IllegalStateException("No matching vertex found for " + from);
     }
 }

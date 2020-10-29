@@ -32,6 +32,21 @@ public class SingleLinkage implements Linkage {
 
     @Override
     public boolean checkComplete(BinaryTreeEdge edge) {
-        return edge.getNumberOfDistances() == 1;
+        return edge.getMatrixElements().size() == 1;
+    }
+
+    @Override
+    public float calculateDistance(BinaryTreeEdge edge) {
+
+        if (edge.getMatrixElements().isEmpty())
+            throw new IllegalStateException("Cannot calculate distance of an empty edge");
+
+        if (!checkComplete(edge)) return Float.MAX_VALUE;
+
+        float minDistance = Float.MAX_VALUE;
+        for (MatrixElement e : edge.getMatrixElements())
+            if (e.value < minDistance)
+                minDistance = e.value;
+        return minDistance;
     }
 }
