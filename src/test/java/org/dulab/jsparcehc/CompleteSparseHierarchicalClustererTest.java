@@ -35,7 +35,6 @@ public class CompleteSparseHierarchicalClustererTest {
 
         assertEquals(6, labels.get(0).intValue());
         assertEquals(6, labels.get(1).intValue());
-        assertEquals(2, labels.get(2).intValue());
         assertEquals(8, labels.get(3).intValue());
         assertEquals(8, labels.get(4).intValue());
         assertEquals(8, labels.get(5).intValue());

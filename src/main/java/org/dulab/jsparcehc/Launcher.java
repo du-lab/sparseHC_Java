@@ -9,9 +9,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class Launcher {
 
@@ -79,11 +79,12 @@ public class Launcher {
      * @param outputFile output file
      */
     private static void cluster(float threshold, File inputFile, File outputFile) {
+
         Matrix distanceMatrix = readFile(inputFile);
         SparseHierarchicalClustererV2 clusterer = new SparseHierarchicalClustererV2(distanceMatrix, new CompleteLinkage());
         clusterer.cluster(threshold);
-        Map<Integer, Integer> labels = clusterer.getLabels();
-        saveLabels(outputFile, labels);
+        Map<Integer, Integer> idToLabelMap = clusterer.getLabels();
+        saveLabels(outputFile, idToLabelMap);
     }
 
     public static void main(String[] args) {

@@ -42,7 +42,7 @@ public class SparseHierarchicalClustererV2 {
         for (int i = 0; i < matrix.getDimension(); ++i) {
             labels.put(i, vertices.get(i).ancestor.id);
         }
-        return labels;
+        return matrix.convertIndicesToIds(labels);
     }
 
     public Dendogram cluster(float threshold) {

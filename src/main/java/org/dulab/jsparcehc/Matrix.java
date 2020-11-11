@@ -1,5 +1,7 @@
 package org.dulab.jsparcehc;
 
+import java.util.Map;
+
 /**
  * This interface is used to acquire values of the distance matrix. The values should be sorted in the ascending order.
  */
@@ -27,4 +29,11 @@ public interface Matrix {
      * @return number of elements
      */
     int getNumElements();
+
+    /**
+     * Converts indices to IDs
+     * @param indexToLabelMap mapping from indices to labels
+     * @return mapping from IDs to labels
+     */
+    Map<Integer, Integer> convertIndicesToIds(Map<Integer, Integer> indexToLabelMap);
 }

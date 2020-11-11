@@ -1,16 +1,18 @@
 package org.dulab.jsparcehc;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class MatrixImpl implements Matrix {
 
     private final SortedSet<MatrixElement> elements;
+    private final Map<Integer, Integer> idToIndexMap = new HashMap<>();
+    private final AtomicInteger index = new AtomicInteger(0);
     private final float threshold;
     private final Integer dimension;
 
     private Iterator<MatrixElement> iterator;
-    private int maxRow = 0;
-    private int maxCol = 0;
 
     public MatrixImpl(float threshold, Integer dimension) {
         this.threshold = threshold;
@@ -30,10 +32,10 @@ public class MatrixImpl implements Matrix {
     }
 
     public void add(int row, int col, float value) {
+        int rowIndex = idToIndexMap.computeIfAbsent(row, k -> index.getAndIncrement());
+        int columnIndex = idToIndexMap.computeIfAbsent(col, k -> index.getAndIncrement());
         if (value < threshold) {
-            elements.add(new MatrixElement(row, col, value));
-            if (row > maxRow) maxRow = row;
-            if (col > maxCol) maxCol = col;
+            elements.add(new MatrixElement(rowIndex, columnIndex, value));
         }
     }
 
@@ -49,11 +51,18 @@ public class MatrixImpl implements Matrix {
 
     @Override
     public int getDimension() {
-        return dimension != null ? dimension : Math.max(maxRow, maxCol) + 1;
+        return dimension != null ? dimension : index.get();
     }
 
     @Override
     public int getNumElements() {
         return elements.size();
+    }
+
+    @Override
+    public Map<Integer, Integer> convertIndicesToIds(Map<Integer, Integer> indexToLabelMap) {
+        return idToIndexMap.entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> indexToLabelMap.get(e.getValue())));
     }
 }

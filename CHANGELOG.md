@@ -1,3 +1,4 @@
+- v0.3.1 Modify MatrixImpl for the cases when element IDs don't start from zero
 - v0.3 Implement a new clustering algorithm that is based on 
 Nguyen-Schmidt-Kwoh paper.
 - v0.2 Implementation of the command line interface

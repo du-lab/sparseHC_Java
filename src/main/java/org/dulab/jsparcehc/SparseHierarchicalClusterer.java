@@ -46,7 +46,7 @@ public class SparseHierarchicalClusterer {
 //            labels.put(element.row, vertices.get(element.row).ancestor.id);
 //            labels.put(element.col, vertices.get(element.col).ancestor.id);
 //        }
-        return labels;
+        return matrix.convertIndicesToIds(labels);
     }
 
     public Dendogram cluster(float threshold) {
