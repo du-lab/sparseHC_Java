@@ -1,3 +1,4 @@
+- v0.3.2 Add a default method `convertIndicesToIds` to the `Matrix` interface 
 - v0.3.1 Modify MatrixImpl for the cases when element IDs don't start from zero
 - v0.3 Implement a new clustering algorithm that is based on 
 Nguyen-Schmidt-Kwoh paper.

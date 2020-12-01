@@ -35,5 +35,8 @@ public interface Matrix {
      * @param indexToLabelMap mapping from indices to labels
      * @return mapping from IDs to labels
      */
-    Map<Integer, Integer> convertIndicesToIds(Map<Integer, Integer> indexToLabelMap);
+    default Map<Integer, Integer> convertIndicesToIds(Map<Integer, Integer> indexToLabelMap) {
+        return indexToLabelMap;
+    };
+
 }
