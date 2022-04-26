@@ -1,4 +1,4 @@
-package org.dulab.jsparcehc;
+package org.dulab.jsparsehc;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,10 +1,9 @@
-package org.dulab.jsparcehc;
+package org.dulab.jsparsehc;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import org.junit.Test;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

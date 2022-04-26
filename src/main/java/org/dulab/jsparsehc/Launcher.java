@@ -1,4 +1,4 @@
-package org.dulab.jsparcehc;
+package org.dulab.jsparsehc;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
@@ -10,8 +10,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class Launcher {
 
