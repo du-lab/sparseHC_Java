@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 public class MatrixImpl implements Matrix {
 
+    private final static MatrixElementComparator COMPARATOR = new MatrixElementComparator();
+
     private final SortedSet<MatrixElement> elements;
     private final Map<Integer, Integer> idToIndexMap = new HashMap<>();
     private final AtomicInteger index = new AtomicInteger(0);
@@ -17,10 +19,7 @@ public class MatrixImpl implements Matrix {
     public MatrixImpl(float threshold, Integer dimension) {
         this.threshold = threshold;
         this.dimension = dimension;
-        this.elements = new TreeSet<>(Comparator
-                .comparing((MatrixElement e) -> e.value)
-                .thenComparing((MatrixElement e) -> e.row)
-                .thenComparing((MatrixElement e) -> e.col));
+        this.elements = new TreeSet<>(COMPARATOR);
     }
 
     public MatrixImpl(float threshold) {
@@ -32,9 +31,9 @@ public class MatrixImpl implements Matrix {
     }
 
     public void add(int row, int col, float value) {
-        int rowIndex = idToIndexMap.computeIfAbsent(row, k -> index.getAndIncrement());
-        int columnIndex = idToIndexMap.computeIfAbsent(col, k -> index.getAndIncrement());
         if (value < threshold) {
+            int rowIndex = idToIndexMap.computeIfAbsent(row, k -> index.getAndIncrement());
+            int columnIndex = idToIndexMap.computeIfAbsent(col, k -> index.getAndIncrement());
             elements.add(new MatrixElement(rowIndex, columnIndex, value));
         }
     }

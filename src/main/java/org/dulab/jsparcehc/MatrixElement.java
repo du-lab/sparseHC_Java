@@ -24,6 +24,14 @@ public class MatrixElement {
         return value;
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
     @Override
     public String toString() {
         return String.format("(%d, %d, %f)", row, col, value);

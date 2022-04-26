@@ -6,7 +6,7 @@
 
     <groupId>org.du-lab.jsparsehc</groupId>
     <artifactId>jsparsehc</artifactId>
-    <version>0.3.2</version>
+    <version>0.3.3</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
